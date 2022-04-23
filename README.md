@@ -77,7 +77,7 @@ crontab -e
 Edit crontab file
 ```
 ### run daily backup ###
-#0 1 * * * /path-to-your/backup/network_backup.py > /dev/null 2>&1
+0 1 * * * /path-to-your/backup/network_backup.py > /dev/null 2>&1
 ```
 
 ## License
