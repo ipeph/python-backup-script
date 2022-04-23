@@ -3,11 +3,11 @@
 ############
 
 ASA-SITE-A-1
-ASA-SITE-A-2
+ASA-SITE-A-2:username:password
 
 ############
 ## SITE-B ##  
 ############
 
 ASA-SITE-B-1
-ASA-SITE-B-2
+ASA-SITE-B-2:username:password
