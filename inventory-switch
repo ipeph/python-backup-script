@@ -3,11 +3,11 @@
 ############
 
 SW-SITE-A-1
-SW-SITE-A-2
+SW-SITE-A-2:username:password
 
 ############
 ## SITE-B ##  
 ############
 
 SW-SITE-B-1
-SW-SITE-B-2
+SW-SITE-B-2:username:password
