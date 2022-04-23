@@ -302,7 +302,109 @@ def backup_f5(file):
                 _init.total_backup_failed += 1
     # closing files
     file_network_inventory.close()
+    
+    
+# backup function for bluecoat devices
+def backup_bluecoat(file):
+    # open inventory file
+    file_network_inventory = open(file, "r")
+    # execute backup script
+    for line in nonblank_lines(file_network_inventory):
+        if not (line.startswith("#") or line.startswith(";")):
+            _init.total_devices += 1
+            _init.bluecoat += 1
+            param = line.split(":")
+            if len(param) == 3:
+                network_devices = network_connection_ip(
+                    "terminal_server",
+                    param[0],
+                    param[1],
+                    param[2],
+                    True,
+                    _init.file_log,
+                )
+            else:
+                network_devices = network_connection_ip(
+                    "terminal_server",
+                    line.strip(),
+                    _init.credentials["username"],
+                    _init.credentials["password"],
+                    True,
+                    _init.file_log,
+                )
+            _init.status += "Checking device .... " + network_devices["ip"]
+            print("Checking device .... " + network_devices["ip"], end=" ", flush=True)
+            cmd_list = ["enable", "\n", "admin", "upload configuration"]
+            try:
+                with ConnectHandler(**network_devices) as net_connect:
+                    output = net_connect.send_multiline_timing(
+                        cmd_list, read_timeout=120
+                    )
+                    # print (output)
+                    _init.status += " ----> Backup Success\n"
+                    print(" ----> Backup Success")
+                    net_connect.disconnect()
+                    _init.total_backup_success += 1
+            except (NetmikoTimeoutException, NetmikoAuthenticationException) as error:
+                write_file(network_devices["ip"], str(error))
+                # print(error)
+                _init.status += " ----> Backup Failed\n"
+                print(" ----> Backup Failed")
+                _init.total_backup_failed += 1
+    # closing files
+    file_network_inventory.close()
 
+    
+# backup function for tanberg devices
+def backup_tanberg(file):
+    # open inventory file
+    file_network_inventory = open(file, "r")
+    # execute backup script
+    for line in nonblank_lines(file_network_inventory):
+        if not (line.startswith("#") or line.startswith(";")):
+            _init.total_devices += 1
+            _init.tanberg += 1
+            param = line.split(":")
+            if len(param) == 3:
+                network_devices = network_connection_ip(
+                    "terminal_server",
+                    param[0],
+                    param[1],
+                    param[2],
+                    True,
+                    _init.file_log,
+                )
+            else:
+                network_devices = network_connection_ip(
+                    "terminal_server",
+                    line.strip(),
+                    _init.credentials["username"],
+                    _init.credentials["password"],
+                    True,
+                    _init.file_log,
+                )
+            _init.status += "Checking device .... " + network_devices["ip"]
+            print("Checking device .... " + network_devices["ip"], end=" ", flush=True)
+            cmd_list = ["\n", "xConfiguration", "bye"]
+            try:
+                with ConnectHandler(**network_devices) as net_connect:
+                    output = net_connect.send_multiline_timing(
+                        cmd_list, read_timeout=120
+                    )
+                    write_file(network_devices["ip"], output)
+                    # print (output)
+                    _init.status += " ----> Backup Success\n"
+                    print(" ----> Backup Success")
+                    net_connect.disconnect()
+                    _init.total_backup_success += 1
+            except (NetmikoTimeoutException, NetmikoAuthenticationException) as error:
+                write_file(network_devices["ip"], str(error))
+                # print(error)
+                _init.status += " ----> Backup Failed\n"
+                print(" ----> Backup Failed")
+                _init.total_backup_failed += 1
+    # closing files
+    file_network_inventory.close()
 
 def main():
     # remove current users mask
