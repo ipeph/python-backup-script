@@ -8,4 +8,4 @@ NEXUS-SITE-A-2
 # SITE B #
 ##########
 NEXUS-SITE-B-1
-NEXUS-SITE-B-2
+NEXUS-SITE-B-2:username:password
