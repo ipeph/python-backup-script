@@ -50,6 +50,8 @@ devices:username:password
 If you only mentioned device it will use username/password on .credentials file.
 If you put : it will use local credentials.
 
+Make sure your hostname already registered on `/etc/hosts` or you can put IP directly in inventory
+
 Tree file
 
  * network_backup.py
