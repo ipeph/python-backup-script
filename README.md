@@ -36,9 +36,19 @@ python3 -m pip install -U pexpect --trusted-host pypi.org --trusted-host pypi.py
 Change your `username` and `password` on .credentials file
 
 - Make sure you edit network_backup.py (backup configuration)
-- Change `/path-to-your` to your windows or linux directory
+Change `/path-to-your` to your windows or linux directory
 
-- Make sure you edit inventory file
+Make sure you edit inventory file
+
+Inventory can be :
+
+```sh
+devices
+devices:username:password
+```
+
+If you're only mentioned device it will use credentials on .credentials.
+else if you put : it will use local credentials.
 
 Tree file
 
