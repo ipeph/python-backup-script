@@ -1,7 +1,7 @@
 #!/var/venv/bin/python3.8
 
 #####################################################
-##### AXA GO - Backup Script
+##### Network Backup Script
 ##### Created By
 ##### Febry Citra Prawira Negara - April 2022
 #####################################################
@@ -28,8 +28,8 @@ class init:
         self.total_devices = 0
         self.total_backup_success = 0
         self.total_backup_failed = 0
-        file_credentials = "/home/svc_netlog_id/.credentials"
-        self.file_log = "/home/svc_netlog_id/backup/logging"
+        file_credentials = "/path-to-your/.credentials"
+        self.file_log = "/path-to-your/backup/logging"
         self.credentials = get_credentials(file_credentials)
         self.sw = 0
         self.nexus = 0
@@ -97,7 +97,7 @@ def touch(fname):
 def write_file(filename, output):
     # write file backup_status
     if "backup-status" in filename:
-        file = open("/home/svc_netlog_id/backup/backup/{}/{}/{}".format(_init.year, _init.month, filename), "w")
+        file = open("/path-to-your/backup/backup/{}/{}/{}".format(_init.year, _init.month, filename), "w")
         output += """#####
 Total Devices:{}
 Total Success:{}
@@ -107,9 +107,9 @@ Total Failed:{}
         )
         file.writelines(output)
         file.close()
-        os.chmod("/home/svc_netlog_id/backup/backup/{}/{}/{}".format(_init.year, _init.month, filename), 0o644)
+        os.chmod("/path-to-your/backup/backup/{}/{}/{}".format(_init.year, _init.month, filename), 0o644)
     elif "total-inventory" in filename:
-        file = open("/home/svc_netlog_id/backup/total-inventory", "w")
+        file = open("/path-to-your/backup/total-inventory", "w")
         output = """###########################
 ### FILE AUTO GENERATED ###
 ### DON'T EDIT THE FILE ###
@@ -132,7 +132,7 @@ Total Tandberg:{}
         )
         file.writelines(output)
         file.close()
-        os.chmod("/home/svc_netlog_id/backup/total-inventory", 0o644)
+        os.chmod("/path-to-your/backup/total-inventory", 0o644)
     # write logging file
     elif "logging" in filename:
         file = open(filename, "a")
@@ -142,7 +142,7 @@ Total Tandberg:{}
     # write configuration file
     else:
         file = open(
-            "/home/svc_netlog_id/backup/backup/{}/{}/{}/{}-{}".format(
+            "/path-to-your/backup/backup/{}/{}/{}/{}-{}".format(
                 _init.year, _init.month, _init.day, filename, _init.time
             ),
             "w",
@@ -150,7 +150,7 @@ Total Tandberg:{}
         file.writelines(output)
         file.close()
         os.chmod(
-            "/home/svc_netlog_id/backup/backup/{}/{}/{}/{}-{}".format(
+            "/path-to-your/backup/backup/{}/{}/{}/{}-{}".format(
                 _init.year, _init.month, _init.day, filename, _init.time
             ),
             0o644,
@@ -267,7 +267,7 @@ def backup_f5(file):
                         network_devices["ip"],
                         network_devices["ip"],
                     )
-                    backup_file = "/home/svc_netlog_id/backup/backup/{}/{}/{}/{}-{}.ucs".format(
+                    backup_file = "/path-to-your/backup/backup/{}/{}/{}/{}-{}.ucs".format(
                         _init.year,
                         _init.month,
                         _init.day,
@@ -309,7 +309,7 @@ def main():
     os.umask(0)
     # create backup and logging folder
     os.makedirs(
-        "/home/svc_netlog_id/backup/backup/{}/{}/{}".format(_init.year, _init.month, _init.day),
+        "/path-to-your/backup/backup/{}/{}/{}".format(_init.year, _init.month, _init.day),
         mode=0o750,
         exist_ok=True,
     )
@@ -317,22 +317,22 @@ def main():
 
     # cisco switch backup
     backup_cisco(
-        "/home/svc_netlog_id/backup/inventory-switch", "cisco_ios"
+        "/path-to-your/backup/inventory-switch", "cisco_ios"
     )
 
     # nexus switch backup
     backup_cisco(
-        "/home/svc_netlog_id/backup/inventory-nexus", "cisco_nxos"
+        "/path-to-your/backup/inventory-nexus", "cisco_nxos"
     )
 
     # asa backup
-    backup_cisco("/home/svc_netlog_id/backup/inventory-asa", "cisco_asa")
+    backup_cisco("/path-to-your/backup/inventory-asa", "cisco_asa")
 
     # wlc backup
-    backup_cisco("/home/svc_netlog_id/backup/inventory-wlc", "cisco_wlc")
+    backup_cisco("/path-to-your/backup/inventory-wlc", "cisco_wlc")
 
     # f5 backup
-    backup_f5("/home/svc_netlog_id/backup/inventory-f5")
+    backup_f5("/path-to-your/backup/inventory-f5")
 
     # write backup _init.status to file
     write_file(
