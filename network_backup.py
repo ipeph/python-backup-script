@@ -407,10 +407,10 @@ def write_html(*input):
 <p style="font-weight: bold;">Information:</p>
 <ul>
 <li><b style="color:red">See a Failed backup !!!</b></li>
-<li>Don't hestitate to reach <b>DL AT-ASIA GNSD &lt;<a href="mailto:self@company.com">self@company.com</a>></b>, our team will fix this issue shortly.</li>
+<li>Don't hestitate to reach <b>SELF COMPANY &lt;<a href="mailto:self@company.com">self@company.com</a>></b>, our team will fix this issue shortly.</li>
 </ul>
-<p>Have any questions? You may reach out to <b>DL AT-ASIA GNSD &lt;<a href="mailto:self@company.com">self@company.com</a>></b>.</p><p>Tech care, </p>
-<p><b>DL AT-ASIA GNSD</b></p>
+<p>Have any questions? You may reach out to <b>SELF COMPANY &lt;<a href="mailto:self@company.com">self@company.com</a>></b>.</p><p>Tech care, </p>
+<p><b>SELF COMPANY</b></p>
 </td>
 </tr>
 <tr>
