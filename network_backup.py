@@ -521,7 +521,7 @@ def email():
 
     # define variable address
     fromaddr = "SELF GO Network Automation <self@company.com>"
-    toaddr = "nccindia@SELF.com"
+    toaddr = "COMPndia@SELF.com"
     cc = "apsd.gndc.in@capgemini.com,self@company.com"
     recipient = cc.split(",") + [toaddr]
     
