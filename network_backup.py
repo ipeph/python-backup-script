@@ -1,7 +1,7 @@
 #!/var/venv/bin/python3.8
 
 #####################################################
-##### AXA GO - Backup Script
+##### Backup Script
 ##### Created By
 ##### Febry Citra Prawira Negara - April 2022
 #####################################################
@@ -37,8 +37,8 @@ class init:
         self.total_devices = 0
         self.total_backup_success = 0
         self.total_backup_failed = 0
-        file_credentials = "/home/svc_netlog_id/.credentials"
-        self.file_log = "/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/logging"
+        file_credentials = "/home/svc_dummy/.credentials"
+        self.file_log = "/home/svc_dummy/prod/company-asia-id-network-network-backup/logging"
         self.credentials = get_credentials(file_credentials)
         self.sw = {
             "total" : 0,
@@ -374,7 +374,7 @@ def temp_file(device, data):
 # write report to html
 def write_html(*input):
     if input[0] == "header":
-        header = """<h3>AXA Group Operations - Indonesia Network Device Daily Backup Status</h3><h3>Daily Health Check - {}-{}-{} - {}</h3></td>
+        header = """<h3>Company - Indonesia Network Device Daily Backup Status</h3><h3>Daily Health Check - {}-{}-{} - {}</h3></td>
 </tr>
 <tr>
 <div align="center"><td colspan=2 class="data">
@@ -387,7 +387,7 @@ def write_html(*input):
 """.format(
             _init.day, _init.abbmonth, _init.year, _init.time
         )
-        file = open("/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/backup-report.html", "a")
+        file = open("/home/svc_dummy/prod/company-asia-id-network-network-backup/backup-report.html", "a")
         file.writelines(header)
         file.close()
     elif input[0] == "footer":
@@ -407,15 +407,15 @@ def write_html(*input):
 <p style="font-weight: bold;">Information:</p>
 <ul>
 <li><b style="color:red">See a Failed backup !!!</b></li>
-<li>Don't hestitate to reach <b>DL AT-ASIA GNSD &lt;<a href="mailto:dl-at-asia-gnsd@axa.com">dl-at-asia-gnsd@axa.com</a>></b>, our team will fix this issue shortly.</li>
+<li>Don't hestitate to reach <b>DL AT-ASIA GNSD &lt;<a href="mailto:self@company.com">self@company.com</a>></b>, our team will fix this issue shortly.</li>
 </ul>
-<p>Have any questions? You may reach out to <b>DL AT-ASIA GNSD &lt;<a href="mailto:dl-at-asia-gnsd@axa.com">dl-at-asia-gnsd@axa.com</a>></b>.</p><p>Tech care, </p>
+<p>Have any questions? You may reach out to <b>DL AT-ASIA GNSD &lt;<a href="mailto:self@company.com">self@company.com</a>></b>.</p><p>Tech care, </p>
 <p><b>DL AT-ASIA GNSD</b></p>
 </td>
 </tr>
 <tr>
 <td colspan=2 class=footer2>
-<p>Powered by AXA Group Operations | &#169; 2023</p>
+<p>Powered by Company | &#169; 2023</p>
 </td>
 </tr>
 </table>
@@ -426,7 +426,7 @@ def write_html(*input):
             input[2],
             input[3],
         )
-        file = open("/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/backup-report.html", "a")
+        file = open("/home/svc_dummy/prod/company-asia-id-network-network-backup/backup-report.html", "a")
         file.writelines(_init.sw["html"])
         file.writelines(_init.nexus["html"])
         file.writelines(_init.asa["html"])
@@ -460,7 +460,7 @@ Total Failed:{}
             "/tftpboot/{}/{}/{}".format(_init.year, _init.month, filename), 540, 1000
         )
     elif "total-inventory" in filename:
-        file = open("/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/total-inventory", "w")
+        file = open("/home/svc_dummy/prod/company-asia-id-network-network-backup/total-inventory", "w")
         output = """###########################
 ### FILE AUTO GENERATED ###
 ### DON'T EDIT THE FILE ###
@@ -483,8 +483,8 @@ Total Tanberg:{}
         )
         file.writelines(output)
         file.close()
-        os.chmod("/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/total-inventory", 0o644)
-        os.chown("/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/total-inventory", 540, 1000)
+        os.chmod("/home/svc_dummy/prod/company-asia-id-network-network-backup/total-inventory", 0o644)
+        os.chown("/home/svc_dummy/prod/company-asia-id-network-network-backup/total-inventory", 540, 1000)
     # write logging file
     elif "logging" in filename:
         file = open(filename, "a")
@@ -520,9 +520,9 @@ Total Tanberg:{}
 def email():
 
     # define variable address
-    fromaddr = "AXA GO Network Automation <dl-at-Asia-gnsd@axa.com>"
-    toaddr = "nccindia@axa.com"
-    cc = "apsd.gndc.in@capgemini.com,dl-at-Asia-gnsd@axa.com"
+    fromaddr = "SELF GO Network Automation <self@company.com>"
+    toaddr = "nccindia@SELF.com"
+    cc = "apsd.gndc.in@capgemini.com,self@company.com"
     recipient = cc.split(",") + [toaddr]
     
     # define message
@@ -533,8 +533,8 @@ def email():
     msg['Cc'] = cc
 
     # replace image in HTML report
-    encoded = base64.b64encode(open("/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/ago.png", "rb").read()).decode()
-    with open('/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/backup-report.html', 'r') as file:
+    encoded = base64.b64encode(open("/home/svc_dummy/prod/company-asia-id-network-network-backup/ago.png", "rb").read()).decode()
+    with open('/home/svc_dummy/prod/company-asia-id-network-network-backup/backup-report.html', 'r') as file:
         html = file.read().replace('encoded', encoded)
 
     # define attachment using html
@@ -573,14 +573,14 @@ def main():
 
     # copy report template
     os.system(
-        "cp /home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/backup-report-template.html /home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/backup-report.html"
+        "cp /home/svc_dummy/prod/company-asia-id-network-network-backup/backup-report-template.html /home/svc_dummy/prod/company-asia-id-network-network-backup/backup-report.html"
     )
 
     # write hml report header
     write_html("header")
 
     # cisco switch backup
-    switch = "/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/inventory-switch"
+    switch = "/home/svc_dummy/prod/company-asia-id-network-network-backup/inventory-switch"
     process_switch = threading.Thread(target=backup_cisco, args=(switch, "cisco_ios", "Cisco Switch",))
     process_switch.start()
     count_switch = threading.Thread(target=count_total_inventory, args=(switch,))
@@ -588,7 +588,7 @@ def main():
     count_switch.join()
 
     # nexus switch backup
-    nexus = "/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/inventory-nexus"
+    nexus = "/home/svc_dummy/prod/company-asia-id-network-network-backup/inventory-nexus"
     process_nexus = threading.Thread(target=backup_cisco, args=(nexus, "cisco_nxos", "Cisco Nexus",))
     process_nexus.start()
     count_nexus = threading.Thread(target=count_total_inventory, args=(nexus,))
@@ -596,7 +596,7 @@ def main():
     count_nexus.join()
 
     # asa backup
-    asa = "/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/inventory-asa"
+    asa = "/home/svc_dummy/prod/company-asia-id-network-network-backup/inventory-asa"
     process_asa = threading.Thread(target=backup_cisco, args=(asa, "cisco_asa", "Cisco ASA",))
     process_asa.start()
     count_asa = threading.Thread(target=count_total_inventory, args=(asa,))
@@ -604,7 +604,7 @@ def main():
     count_asa.join()
 
     # wlc backup
-    wlc = "/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/inventory-wlc"
+    wlc = "/home/svc_dummy/prod/company-asia-id-network-network-backup/inventory-wlc"
     process_wlc = threading.Thread(target=backup_cisco, args=(wlc, "cisco_wlc", "Cisco WLC",))
     process_wlc.start()
     count_wlc = threading.Thread(target=count_total_inventory, args=(wlc,))
@@ -612,7 +612,7 @@ def main():
     count_wlc.join()
 
     # f5 backup
-    f5 = "/home/svc_netlog_id/prod/apdc-asia-id-network-network-backup/inventory-f5"
+    f5 = "/home/svc_dummy/prod/company-asia-id-network-network-backup/inventory-f5"
     process_f5 = threading.Thread(target=backup_f5, args=(f5,))
     process_f5.start()
     count_f5 = threading.Thread(target=count_total_inventory, args=(f5,))
